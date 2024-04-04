@@ -27,10 +27,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.nagma.mymusicapp.MainViewModel
 import com.nagma.mymusicapp.Screen
+import com.nagma.mymusicapp.navigation
 import com.nagma.mymusicapp.screensInDrawer
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -39,15 +42,21 @@ import kotlinx.coroutines.launch
 @Composable
 fun MainView() {
 
+    val viewModel: MainViewModel = viewModel()
+
     val scaffoldState: ScaffoldState = rememberScaffoldState()
     val scope: CoroutineScope = rememberCoroutineScope()
     val controller: NavController = rememberNavController()
     val navBackStackEntry by controller.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
 
+    val currentScreen = remember {
+        viewModel.currentScreen.value
+    }
+
     val title = remember {
         // TODO Change that to current screens title
-        mutableStateOf("")
+        mutableStateOf(currentScreen.title)
     }
 
     Scaffold(
@@ -91,7 +100,8 @@ fun MainView() {
         }
         
     ) {
-        Text(text = "Text", modifier = Modifier.padding(it))
+        navigation(navController = controller, viewModel = viewModel, pd = it)
+//        Text(text = "Text", modifier = Modifier.padding(it))
     }
 }
 
