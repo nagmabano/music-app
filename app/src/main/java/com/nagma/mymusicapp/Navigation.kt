@@ -8,6 +8,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.nagma.mymusicapp.ui.AccountView
 
 @Composable
 fun navigation(navController: NavController,
@@ -18,7 +19,7 @@ fun navigation(navController: NavController,
         startDestination = Screen.DrawerScreen.addAccount.dRoute,
         modifier = Modifier.padding(pd)) {
         composable(Screen.DrawerScreen.addAccount.dRoute) {
-
+            AccountView()
         }
 
         composable(Screen.DrawerScreen.Subscription.dRoute) {
