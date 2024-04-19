@@ -24,7 +24,7 @@ sealed class Screen(val title:String, route:String) {
 
         object addAccount: DrawerScreen(
             "Add Account",
-            "add-accont",
+            "add_account",
             R.drawable.ic_add_account
         )
     }

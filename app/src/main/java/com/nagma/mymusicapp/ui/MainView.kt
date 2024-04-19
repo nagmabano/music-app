@@ -1,5 +1,6 @@
 package com.nagma.mymusicapp.ui.theme
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
@@ -35,6 +36,7 @@ import com.nagma.mymusicapp.MainViewModel
 import com.nagma.mymusicapp.Screen
 import com.nagma.mymusicapp.navigation
 import com.nagma.mymusicapp.screensInDrawer
+import com.nagma.mymusicapp.ui.AccountDialog
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -49,6 +51,10 @@ fun MainView() {
     val controller: NavController = rememberNavController()
     val navBackStackEntry by controller.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
+
+    val dialogOpen = remember {
+        mutableStateOf(false)
+    }
 
     val currentScreen = remember {
         viewModel.currentScreen.value
@@ -87,8 +93,12 @@ fun MainView() {
                             scaffoldState.drawerState.close()
                         }
 
+                        Log.i("dialogOpen", "${item.dRoute}"
+                        )
+
                         if (item.dRoute == "add_account") {
                             // open dialog
+                            dialogOpen.value = true
                         } else {
                             controller.navigate(item.dRoute)
                             title.value = item.dTitle
@@ -102,6 +112,7 @@ fun MainView() {
     ) {
         navigation(navController = controller, viewModel = viewModel, pd = it)
 //        Text(text = "Text", modifier = Modifier.padding(it))
+        AccountDialog(dialogOpen = dialogOpen)
     }
 }
 
